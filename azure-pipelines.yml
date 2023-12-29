@@ -15,8 +15,14 @@ jobs:
         $(tag)
 
 - job: Deploy
-  displayName: Deploy
-  dependsOn: Build
+  displayName: Deploy- task: KubernetesManifest@1
+  inputs:
+    action: 'deploy'
+    connectionType: 'azureResourceManager'
+    azureSubscriptionConnection: 'MSDN Platforms Subscription(4)(bd3dc7c5-5972-4972-9e57-dac495e3e51e)'
+    azureResourceGroup: 'AKS'
+    kubernetesCluster: 'AKScluster'
+    useClusterAdmin: true
   pool:
     vmImage: $(vmImageName)
   steps:
